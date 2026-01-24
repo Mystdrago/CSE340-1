@@ -40,6 +40,22 @@ const port = process.env.PORT
 const host = process.env.HOST
 
 /* ***********************
+ * Error Handling Middleware
+ *************************/
+app.use((err, req, res, next) => {
+  console.error("ERROR:", err)
+
+  const nav = req.nav || "" // allow nav if available
+
+  res.status(500).render("errors/error", {
+    title: "Server Error",
+    message: err.message,
+    nav
+  })
+})
+
+
+/* ***********************
  * Log statement to confirm server operation
  *************************/
 app.listen(port, () => {
