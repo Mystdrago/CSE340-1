@@ -90,6 +90,14 @@
             <div class="flash"><%= locals.messages.error %></div>
         <% } %>
 
+        <% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
         <!-- Registration Form -->
         <form action="/account/register" method="POST">
 
@@ -133,6 +141,7 @@
                     id="account_password" 
                     name="account_password"
                     required
+                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
                 />
                 <div class="password-rules">
                     • Minimum 12 characters<br>

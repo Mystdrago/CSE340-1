@@ -110,8 +110,20 @@
 
             <div>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter password" required />
+                <input type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Enter password" 
+                required 
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                />
             </div>
+            <div class="password-rules">
+                    • Minimum 12 characters<br>
+                    • At least 1 capital letter<br>
+                    • At least 1 number<br>
+                    • At least 1 special character
+                </div>
 
             <button type="submit">Log In</button>
         </form>
