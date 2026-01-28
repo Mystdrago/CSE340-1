@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 80px auto;
+            padding: 32px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+
+        .flash {
+            padding: 12px 16px;
+            background: #ffe1e1;
+            border: 1px solid #ffb4b4;
+            color: #9f1d1d;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .password-rules {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+            background: #0077cc;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background: #005fa3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1><%= title %></h1>
+
+        <!-- Flash message display -->
+        <% if (locals.messages && locals.messages.error) { %>
+            <div class="flash"><%= locals.messages.error %></div>
+        <% } %>
+
+        <!-- Registration Form -->
+        <form action="/account/register" method="POST">
+
+            <div>
+                <label for="account_firstname">First Name (required)</label>
+                <input 
+                    type="text" 
+                    id="account_firstname" 
+                    name="account_firstname"
+                    required
+                    value="<%= typeof account_firstname !== 'undefined' ? account_firstname : '' %>"
+                />
+            </div>
+
+            <div>
+                <label for="account_lastname">Last Name (required)</label>
+                <input 
+                    type="text" 
+                    id="account_lastname" 
+                    name="account_lastname"
+                    required
+                    value="<%= typeof account_lastname !== 'undefined' ? account_lastname : '' %>"
+                />
+            </div>
+
+            <div>
+                <label for="account_email">Email Address (required)</label>
+                <input 
+                    type="email" 
+                    id="account_email" 
+                    name="account_email"
+                    required
+                    value="<%= typeof account_email !== 'undefined' ? account_email : '' %>"
+                />
+            </div>
+
+            <div>
+                <label for="account_password">Password (required)</label>
+                <input 
+                    type="password" 
+                    id="account_password" 
+                    name="account_password"
+                    required
+                />
+                <div class="password-rules">
+                    • Minimum 12 characters<br>
+                    • At least 1 capital letter<br>
+                    • At least 1 number<br>
+                    • At least 1 special character
+                </div>
+            </div>
+
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+</body>
+</html>

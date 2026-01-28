@@ -32,7 +32,7 @@ body {
 #top-header .siteName a {
   text-decoration: none;
   font-size: 1.5em;
-  color: #3399ff;
+  color: #000000;
 }
 
 #tools a {
@@ -53,16 +53,16 @@ nav ul {
 nav li {
   flex: 1;
   text-align: center;
-  background-color: #3399ff;
+  background-color: #3399ff3a;
   margin: 0 5px;
   padding: 12px;
   border-radius: 5px;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
 }
 
 nav li:hover {
-  background-color: #2673cc;
+  background-color: #2a85ec;
 }
 
 /* --- Welcome Section --- */
@@ -107,14 +107,14 @@ nav li:hover {
   display: inline-block;
   margin-top: 10px;
   padding: 10px 15px;
-  background-color: #3399ff;
-  color: white;
+  background-color: #3399ff3a;
+  color: #000000;
   text-decoration: none;
   border-radius: 5px;
 }
 
 .car-button:hover {
-  background-color: #2673cc;
+  background-color: #2a85ec;
 }
 
 .action-reviews-section {
