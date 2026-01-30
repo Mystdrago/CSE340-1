@@ -65,11 +65,6 @@ app.use("/inv", inventoryRoute)
 app.use("/account", require("./routes/accountRoute"))
 
 
-app.use(async(req, res, next) => {
-  next({status: 404, message: "Sorry, we appear to have lost that page."})
-})
-
-
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
@@ -83,15 +78,23 @@ const host = process.env.HOST
 app.use((err, req, res, next) => {
   console.error("ERROR:", err)
 
-  const nav = req.nav || "" // allow nav if available
+  const status = err.status || 500
+  const nav = res.locals.nav || ""
 
-  res.status(500).render("errors/error", {
-    title: "Server Error",
+  res.status(status).render("errors/error", {
+    title: status === 404 ? "404 Not Found" : "Server Error",
     message: err.message,
     nav
   })
 })
 
+app.use((req, res) => {
+  res.status(404).render("errors/error", {
+    title: "404 Not Found",
+    message: "Sorry, we appear to have lost that page.",
+    nav: res.locals.nav || ""
+  })
+})
 
 /* ***********************
  * Log statement to confirm server operation

@@ -86,7 +86,7 @@
         <h1><%= title %></h1>
 
         <!-- Flash message display -->
-        <% if (locals.messages && locals.messages.error) { %>
+        <% if (locals.messages && locals.messages().error) { %>
             <div class="flash"><%= locals.messages.error %></div>
         <% } %>
 
@@ -108,7 +108,7 @@
                     id="account_firstname" 
                     name="account_firstname"
                     required
-                    value="<%= typeof account_firstname !== 'undefined' ? account_firstname : '' %>"
+                    value="<%= locals.account_firstname %>"
                 />
             </div>
 
@@ -119,7 +119,7 @@
                     id="account_lastname" 
                     name="account_lastname"
                     required
-                    value="<%= typeof account_lastname !== 'undefined' ? account_lastname : '' %>"
+                    value="<%= locals.account_lastname %>"
                 />
             </div>
 
@@ -130,7 +130,7 @@
                     id="account_email" 
                     name="account_email"
                     required
-                    value="<%= typeof account_email !== 'undefined' ? account_email : '' %>"
+                    value="<%= locals.account_email %>"
                 />
             </div>
 

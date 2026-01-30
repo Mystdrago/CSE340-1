@@ -96,13 +96,13 @@
         <h1><%= title %></h1>
 
         <!-- Flash message display (if provided) -->
-<% if (locals.messages && locals.messages.error) { %>
+<% if (locals.messages && locals.messages().error) { %>
     <div class="flash"><%= locals.messages.error %></div>
 <% } %>
 
 
         <!-- Login Form -->
-        <form action="/account/login" method="POST">
+        <form id="loginForm" action="/account/login" method="post">
             <div>
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="you@example.com" required />

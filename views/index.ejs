@@ -1,8 +1,12 @@
-<h1>
-<%- include('partials/welcome') %>
-<%- include('partials/car') %>
-<%- include('partials/action-reviews') %>
-</h1>
+<h1><%= title %></h1>
 
-<%- messages() %>
+<% if (messages) { %>
+  <%- messages() %>
+<% } %>
+
+<div id="homepage-content">
+  <%- include('partials/welcome') %>
+  <%- include('partials/car') %>
+  <%- include('partials/action-reviews') %>
+</div>
 
