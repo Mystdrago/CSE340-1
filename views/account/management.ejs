@@ -1,0 +1,26 @@
+<%- include("../partials/header") %>
+<%- include("../partials/nav") %>
+
+<main>
+  <h1>Account Management</h1>
+
+  <% if (messages.error) { %>
+    <ul class="notice">
+      <% messages.error.forEach(error => { %>
+        <li><%= error %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <% if (messages.success) { %>
+    <ul class="success">
+      <% messages.success.forEach(msg => { %>
+        <li><%= msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <p>You're logged in</p>
+</main>
+
+<%- include("../partials/footer") %>

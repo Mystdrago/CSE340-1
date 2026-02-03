@@ -16,6 +16,8 @@ const inventoryRoute = require("./routes/inventoryRoute")
 
 const session = require("express-session")
 const pool = require('./database/')
+const cookieParser = require("cookie-parser")
+
 
 
 
@@ -43,6 +45,8 @@ app.use(function(req, res, next){
   next()
 })
 
+// Login stuff
+app.use(cookieParser())
 
 /* ***********************
  * View Engine and Templates

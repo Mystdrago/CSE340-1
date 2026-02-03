@@ -28,6 +28,12 @@ router.post(
 router.get("/login", accountController.buildLogin)
 
 // Login processing
-router.post("/login", accountController.accountLogin)
+router.post("/login", 
+  regValidate.loginRules(),
+  regValidate.checkLogData,
+  accountController.accountLogin)
+
+// Default account management view
+router.get("/", accountController.buildAccountManagement);
 
 module.exports = router
