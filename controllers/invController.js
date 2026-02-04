@@ -49,15 +49,54 @@ invCont.buildByInventoryId = async function (req, res, next) {
 invCont.buildManagementView = async function (req, res, next) {
   try {
     const nav = await utilities.getNav()
-    const classificationSelect = await utilities.buildClassificationList()
+    const classificationList = await utilities.buildClassificationList()
     res.render("./inventory/management", {
       title: "Inventory Management",
       nav,
       errors: null,
-      classificationSelect,
+      classificationList,
     })
   } catch (error) {
     next(error)
+  }
+}
+
+invCont.updateInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color
+  } = req.body
+
+  const updateResult = await invModel.updateInventory(
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color
+  )
+
+  if (updateResult) {
+    req.flash("notice", `The ${updateResult.inv_make} ${updateResult.inv_model} was successfully updated.`)
+    return res.redirect("/inv/")
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    return res.status(501).render("inventory/edit-inventory", {
+      title: "Edit Inventory Item",
+      nav,
+      classificationList: await utilities.buildClassificationList(), // fallback
+      errors: null,
+      values: req.body
+    })
   }
 }
 
@@ -172,6 +211,31 @@ invCont.getInventoryJSON = async (req, res, next) => {
     next(error) // pass other errors to error handler
   }
 }
+
+
+invCont.editInventoryView = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.inv_id)
+    let nav = await utilities.getNav()
+    
+    const itemData = await invModel.getInventoryById(inv_id)
+    if (!itemData) return next(new Error("Inventory item not found"))
+
+    const classificationList = await utilities.buildClassificationList(itemData.classification_id)
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+
+    res.render("./inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      classificationList,
+      errors: null,
+      values: { ...itemData }  // pass all existing values including image, thumbnail
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 
 module.exports = invCont
