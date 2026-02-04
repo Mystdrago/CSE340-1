@@ -45,4 +45,6 @@ router.post(
   invController.addInventory
 )
 
+router.get("/getInventory/:classification_id", invController.getInventoryJSON)
+
 module.exports = router;

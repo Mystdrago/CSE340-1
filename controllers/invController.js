@@ -49,10 +49,12 @@ invCont.buildByInventoryId = async function (req, res, next) {
 invCont.buildManagementView = async function (req, res, next) {
   try {
     const nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()
     res.render("./inventory/management", {
       title: "Inventory Management",
       nav,
       errors: null,
+      classificationSelect,
     })
   } catch (error) {
     next(error)
@@ -149,5 +151,27 @@ invCont.addInventory = async function (req, res, next) {
     next(error)
   }
 }
+
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  try {
+    const invData = await invModel.getInventoryByClassificationId(classification_id)
+    
+    // If invData is empty, return an empty array instead of throwing
+    if (invData.length > 0) {
+      return res.json(invData)
+    } else {
+      return res.json([]) // return empty array for JS to handle
+    }
+
+  } catch (error) {
+    next(error) // pass other errors to error handler
+  }
+}
+
 
 module.exports = invCont

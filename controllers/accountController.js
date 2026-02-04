@@ -16,12 +16,15 @@ async function buildLogin(req, res, next) {
 
 //register veiw
 async function buildRegister(req, res, next) {
-    let nav = await utilities.getNav()
+    let nav = await utilities.getNav();
     res.render("account/register", {
         title: "Register",
         nav,
         errors: null,
-    })
+        account_firstname: "",
+        account_lastname: "",
+        account_email: "",
+    });
 }
 
 /* ****************************************

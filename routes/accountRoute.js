@@ -31,6 +31,6 @@ router.post("/login",
   accountController.accountLogin)
 
 // Default account management view
-router.get("/", accountController.buildAccountManagement);
+router.get("/", utilities.checkLogin, accountController.buildAccountManagement);
 
 module.exports = router
