@@ -50,5 +50,10 @@ router.get("/getInventory/:classification_id", invController.getInventoryJSON)
 // Route to show edit form for a specific inventory item
 router.get("/edit/:inv_id", invController.editInventoryView)
 router.post("/update/", invController.updateInventory)
+// Route to show delete confirmation view
+router.get("/delete/:inv_id", invController.buildDeleteView)
+
+// Route to carry out delete
+router.post("/delete", invController.deleteInventoryItem)
 
 module.exports = router;
