@@ -24,9 +24,6 @@ router.post(
   accountController.registerAccount
 )
 
-// Login view
-router.get("/login", accountController.buildLogin)
-
 // Login processing
 router.post("/login", 
   regValidate.loginRules(),

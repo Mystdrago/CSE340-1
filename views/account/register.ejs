@@ -86,9 +86,9 @@
         <h1><%= title %></h1>
 
         <!-- Flash message display -->
-        <% if (locals.messages && locals.messages().error) { %>
-            <div class="flash"><%= locals.messages.error %></div>
-        <% } %>
+        <% if (messages.notice) { %>
+  <div class="flash"><%= messages.notice %></div>
+<% } %>
 
         <% if (errors) { %>
   <ul class="notice">
@@ -103,35 +103,17 @@
 
             <div>
                 <label for="account_firstname">First Name (required)</label>
-                <input 
-                    type="text" 
-                    id="account_firstname" 
-                    name="account_firstname"
-                    required
-                    value="<%= locals.account_firstname %>"
-                />
+                <input type="text" id="account_firstname" name="account_firstname" required value="<%= account_firstname || '' %>" />
             </div>
 
             <div>
                 <label for="account_lastname">Last Name (required)</label>
-                <input 
-                    type="text" 
-                    id="account_lastname" 
-                    name="account_lastname"
-                    required
-                    value="<%= locals.account_lastname %>"
-                />
+                <input type="text" id="account_lastname" name="account_lastname" required value="<%= account_lastname || '' %>" />
             </div>
 
             <div>
                 <label for="account_email">Email Address (required)</label>
-                <input 
-                    type="email" 
-                    id="account_email" 
-                    name="account_email"
-                    required
-                    value="<%= locals.account_email %>"
-                />
+                <input type="email" id="account_email" name="account_email" required value="<%= account_email || '' %>" />
             </div>
 
             <div>
