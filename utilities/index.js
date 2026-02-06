@@ -133,16 +133,79 @@ Util.checkJWTToken = (req, res, next) => {
 }
 
 /* ****************************************
+ *  Middleware to get account data from JWT
+ * ************************************ */
+Util.getAccountData = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(req.cookies.jwt, process.env.ACCOUNT_TOKEN_SECRET, (err, accountData) => {
+      if (err) {
+        res.clearCookie("jwt")
+        return next() // token invalid, continue without setting accountData
+      }
+      res.locals.accountData = accountData
+      res.locals.loggedin = 1
+      next()
+    })
+  } else {
+    next() // no token, continue
+  }
+}
+
+
+/* ****************************************
  *  Check Login
  * ************************************ */
- Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
-    next()
-  } else {
+
+// Check if logged in
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.accountData) {
+    return next() // logged in, continue
+  }
+
+  // Not logged in
+  req.flash("notice", "Please log in to access this page.")
+  return res.redirect("/account/login")
+}
+
+
+Util.checkAdmin = (req, res, next) => {
+  const accountData = res.locals.accountData
+
+  if (!accountData) {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
- }
+
+  if (accountData.account_type === "Admin") {
+    return next()
+  }
+
+  req.flash("notice", "You do not have permission to access this area.")
+  return res.redirect("/account/login")
+}
+
+
+
+ Util.checkEmployeeOrAdmin = (req, res, next) => {
+  const accountData = res.locals.accountData
+
+  if (!accountData) {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+
+  if (
+    accountData.account_type === "Employee" ||
+    accountData.account_type === "Admin"
+  ) {
+    return next()
+  }
+
+  req.flash("notice", "You do not have permission to access this area.")
+  return res.redirect("/account/login")
+}
+
+
 
 
 module.exports = Util

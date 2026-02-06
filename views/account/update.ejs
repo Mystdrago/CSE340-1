@@ -1,0 +1,84 @@
+<main>
+  <h1><%= title %></h1>
+
+  <% if (messages.error) { %>
+    <ul class="notice">
+      <% messages.error.forEach(error => { %>
+        <li><%= error %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <% if (messages.success) { %>
+    <ul class="success">
+      <% messages.success.forEach(msg => { %>
+        <li><%= msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <!-- ACCOUNT UPDATE FORM -->
+  <form action="/account/update" method="post">
+    <fieldset>
+      <legend>Account Update</legend>
+
+      <label for="account_firstname">First Name</label>
+      <input
+        type="text"
+        id="account_firstname"
+        name="account_firstname"
+        value="<%= account_firstname %>"
+        required
+      >
+
+      <label for="account_lastname">Last Name</label>
+      <input
+        type="text"
+        id="account_lastname"
+        name="account_lastname"
+        value="<%= account_lastname %>"
+        required
+      >
+
+      <label for="account_email">Email Address</label>
+      <input
+        type="email"
+        id="account_email"
+        name="account_email"
+        value="<%= account_email %>"
+        required
+      >
+
+      <input type="hidden" name="account_id" value="<%= account_id %>">
+
+      <button type="submit">Update Account</button>
+    </fieldset>
+  </form>
+
+  <!-- PASSWORD CHANGE FORM -->
+  <form action="/account/update-password" method="post">
+    <fieldset>
+      <legend>Change Password</legend>
+
+      <label for="account_password">New Password</label>
+      <input
+        type="password"
+        id="account_password"
+        name="account_password"
+        required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      >
+
+      <div class="password-rules">
+                    • Minimum 12 characters<br>
+                    • At least 1 capital letter<br>
+                    • At least 1 number<br>
+                    • At least 1 special character
+                </div>
+
+      <input type="hidden" name="account_id" value="<%= account_id %>">
+
+      <button type="submit">Change Password</button>
+    </fieldset>
+  </form>
+</main>

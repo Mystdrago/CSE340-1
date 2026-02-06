@@ -52,6 +52,19 @@ app.use(function(req, res, next){
 
 app.use(utilities.checkJWTToken)
 
+app.use((req, res, next) => {
+  // guarantee these ALWAYS exist for every view
+  res.locals.loggedin = res.locals.loggedin || false
+  res.locals.accountData = res.locals.accountData || null
+  next()
+})
+
+app.use(async (req, res, next) => {
+  res.locals.nav = await utilities.getNav()
+  next()
+})
+
+
 /* ***********************
  * View Engine and Templates
  *************************/

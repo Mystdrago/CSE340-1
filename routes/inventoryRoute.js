@@ -2,6 +2,7 @@
 const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
+const utilities = require("../utilities")
 const { body } = require("express-validator")
 
 // Route to build inventory by classification view
@@ -15,10 +16,10 @@ router.get("/trigger-error", (req, res, next) => {
 })
 
 // Management view
-router.get("/", invController.buildManagementView)
+router.get("/", utilities.checkEmployeeOrAdmin, invController.buildManagementView)
 
 // Add classification
-router.get("/add-classification", invController.buildAddClassification)
+router.get("/add-classification", utilities.checkEmployeeOrAdmin, invController.buildAddClassification)
 router.post(
   "/add-classification",
   body("classification_name")
@@ -29,7 +30,7 @@ router.post(
 )
 
 // Add inventory
-router.get("/add-inventory", invController.buildAddInventory)
+router.get("/add-inventory", utilities.checkEmployeeOrAdmin, invController.buildAddInventory)
 router.post(
   "/add-inventory",
   [
@@ -48,12 +49,12 @@ router.post(
 router.get("/getInventory/:classification_id", invController.getInventoryJSON)
 
 // Route to show edit form for a specific inventory item
-router.get("/edit/:inv_id", invController.editInventoryView)
-router.post("/update/", invController.updateInventory)
+router.get("/edit/:inv_id", utilities.checkEmployeeOrAdmin, invController.editInventoryView)
+router.post("/update/", utilities.checkEmployeeOrAdmin, invController.updateInventory)
 // Route to show delete confirmation view
-router.get("/delete/:inv_id", invController.buildDeleteView)
+router.get("/delete/:inv_id", utilities.checkAdmin, invController.buildDeleteView)
 
 // Route to carry out delete
-router.post("/delete", invController.deleteInventoryItem)
+router.post("/delete", utilities.checkAdmin, invController.deleteInventoryItem)
 
 module.exports = router;
