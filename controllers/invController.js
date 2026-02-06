@@ -7,18 +7,24 @@ const invCont = {}
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
-  const classification_id = req.params.classificationId
-  const data = await invModel.getInventoryByClassificationId(classification_id)
+  let classification_id = parseInt(req.params.classificationId)
 
-  let className = "Unknown Classification"
-  let grid = "<p>No vehicles found for this classification.</p>"
-
-  if (data.length > 0) {
-    className = data[0].classification_name
-    grid = await utilities.buildClassificationGrid(data)
+  if (isNaN(classification_id)) {
+    // redirect or show a friendly message
+    req.flash("notice", "Invalid classification ID")
+    return res.redirect("/") 
   }
 
   try {
+    const data = await invModel.getInventoryByClassificationId(classification_id)
+    let className = "No vehicles found"
+    let grid = "<p>No vehicles found for this classification.</p>"
+
+    if (data.length > 0) {
+      className = data[0].classification_name
+      grid = await utilities.buildClassificationGrid(data)
+    }
+
     const nav = await utilities.getNav()
     res.render("./inventory/classification", {
       title: `${className} vehicles`,
@@ -27,6 +33,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
       errors: null,
     })
   } catch (error) {
+    console.error("getInventoryByClassificationId error:", error)
     next(error)
   }
 }
