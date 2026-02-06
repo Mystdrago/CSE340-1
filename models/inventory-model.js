@@ -27,7 +27,6 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-
 /* Get a single vehicle's data by inv_id*/
 async function getInventoryById(inv_id) {
   try {
